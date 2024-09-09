@@ -4,17 +4,20 @@ const rotas = require('./routes');
 
 const app = express();
 
-// altere o front do ip 127.0.0.1 para localhost quando for subir o index em um go-live
+// Configuração do CORS
 app.use(cors({
-    origin: 'http://localhost:3000'
+    origin: 'http://localhost:3000' // Altere para a URL do seu frontend
 }));
-
 
 app.use(express.json());
 app.use('/', rotas);
+
+app.get('/', (req, res) => {
+    res.send('Bem-vindo à API');
+});
 
 app.get('/home', (req, res) => {
     res.send('Desenvolvido por Pablo Aurelio Melo Almeida');
 });
 
-app.listen(3000, () => console.log(`http://localhost:3000`));
+app.listen(3000, () => console.log(`Servidor rodando em http://localhost:3000`));
