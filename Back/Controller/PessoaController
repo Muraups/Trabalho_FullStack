@@ -1,13 +1,19 @@
 const { Pessoa } = require('../models');
+const { validationResult } = require('express-validator');
 
 exports.create = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
     try {
       const pessoa = await Pessoa.create(req.body);
       return res.status(201).json(pessoa);
     } catch (error) {
       return res.status(400).json({ error: 'Erro ao criar pessoa', details: error });
     }
-  };
+};
   
   exports.findAll = async (req, res) => {
     try {
